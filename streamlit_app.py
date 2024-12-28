@@ -39,23 +39,23 @@ I want the response in one single string having the structure
 {{"JD Match":"%","MissingKeywords:[]","Profile Summary":""}}
 """
 
-# Inject custom CSS for blueish theme and stylish fonts
+# Inject custom CSS for teal theme
 st.markdown(
     """
     <style>
     /* Background styling */
     .stApp {
-        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+        background: linear-gradient(to bottom, #dff7f6, #81d8d0);
         background-size: cover;
         background-attachment: fixed;
-        color: #f0f8ff;
+        color: #004d4b;
     }
 
     /* Title styling */
     h1 {
         font-family: 'Poppins', sans-serif;
         font-size: 3.5em;
-        color: #00aaff;
+        color: #008080;
         text-align: center;
         margin-bottom: 10px;
     }
@@ -64,7 +64,7 @@ st.markdown(
     p {
         font-family: 'Roboto', sans-serif;
         font-size: 1.3em;
-        color: #b0c4de;
+        color: #005f5e;
         text-align: center;
         margin-top: -10px;
         margin-bottom: 30px;
@@ -74,12 +74,12 @@ st.markdown(
     textarea, .stFileUploader {
         font-family: 'Roboto', sans-serif;
         font-size: 1.1em;
-        color: #333333;
+        color: #004d4b;
     }
 
     /* Button styling */
     button {
-        background-color: #007acc !important;
+        background-color: #20b2aa !important;
         color: white !important;
         font-size: 1.2em !important;
         border-radius: 5px !important;
@@ -91,7 +91,7 @@ st.markdown(
     .stSubheader {
         font-family: 'Poppins', sans-serif;
         font-size: 1.4em;
-        color: #f0f8ff;
+        color: #004d4b;
     }
     </style>
 
