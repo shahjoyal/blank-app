@@ -39,81 +39,65 @@ I want the response in one single string having the structure
 {{"JD Match":"%","MissingKeywords:[]","Profile Summary":""}}
 """
 
-# Inject custom CSS for teal theme with darker fonts
+# Inject custom CSS for styling
 st.markdown(
     """
     <style>
-    /* Background styling */
+    /* App background and font styles */
     .stApp {
-        background: linear-gradient(to bottom, #dff7f6, #81d8d0);
+        background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
         background-size: cover;
         background-attachment: fixed;
-        color: #003333; /* Darker text color */
+        font-family: 'Roboto', sans-serif;
     }
 
-    /* Title styling */
     h1 {
         font-family: 'Poppins', sans-serif;
         font-size: 3.5em;
-        color: #002626; /* Dark teal for better contrast */
+        color: #004d40;
         text-align: center;
-        margin-bottom: 10px;
     }
 
-    /* Subtitle styling */
     p {
-        font-family: 'Roboto', sans-serif;
-        font-size: 1.3em;
-        color: #002626; /* Dark teal for better readability */
         text-align: center;
-        margin-top: -10px;
-        margin-bottom: 30px;
+        font-size: 1.2em;
+        color: #004d40;
     }
 
-    /* Customize text inputs */
-    textarea, .stFileUploader {
-        font-family: 'Roboto', sans-serif;
-        font-size: 1.1em;
-        color: #002626; /* Dark teal font for inputs */
-    }
-
-    /* Button styling */
-    button {
-        background-color: #20b2aa !important;
-        color: white !important;
-        font-size: 1.2em !important;
-        border-radius: 5px !important;
-        padding: 8px 16px !important;
-        font-family: 'Roboto', sans-serif !important;
-    }
-
-    /* Subheader styling */
-    .stSubheader {
-        font-family: 'Poppins', sans-serif;
-        font-size: 1.4em;
-        color: #003333; /* Darker text for subheaders */
-    }
-
-    /* Response box styling */
-    .response-box {
-        background-color: white;
+    /* Styling for response boxes */
+    .ats-score-box, .suggestions-box {
+        background-color: #ffffff;
         border-radius: 10px;
         padding: 20px;
-        margin-top: 20px;
+        margin: 20px 0;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        font-family: 'Roboto', sans-serif;
-        color: #003333;
+    }
+
+    .ats-score-box h3, .suggestions-box h3 {
+        color: #004d40;
+        font-size: 1.5em;
+    }
+
+    .ats-score-box {
+        border-left: 5px solid #26a69a;
+    }
+
+    .suggestions-box {
+        border-left: 5px solid #00796b;
+    }
+
+    .suggestions-box p {
+        color: #004d40;
+        font-size: 1.1em;
     }
     </style>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     """,
     unsafe_allow_html=True,
 )
 
 # Streamlit app content
 st.markdown('<h1>Jobify</h1>', unsafe_allow_html=True)
-st.markdown('<p>Improve Your Resume ATS</p>', unsafe_allow_html=True)
+st.markdown('<p>Evaluate Your Resume with ATS</p>', unsafe_allow_html=True)
 
 jd = st.text_area("Paste the Job Description", help="Enter the job description here")
 uploaded_file = st.file_uploader("Upload Your Resume", type="pdf", help="Please upload a PDF file")
@@ -126,10 +110,21 @@ if submit:
         response = get_gemini_response(input_prompt.format(text=text, jd=jd))
         response_data = json.loads(response)
 
+        # Display ATS Score in a separate box
         st.markdown(
             f"""
-            <div class="response-box">
-                <h3>JD Match Score: {response_data['JD Match']}</h3>
+            <div class="ats-score-box">
+                <h3>ATS Match Score: {response_data['JD Match']}</h3>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # Display suggestions in another box
+        st.markdown(
+            f"""
+            <div class="suggestions-box">
+                <h3>Suggestions</h3>
                 <p><strong>Missing Keywords:</strong> {', '.join(response_data['MissingKeywords'])}</p>
                 <p><strong>Profile Summary:</strong> {response_data['Profile Summary']}</p>
             </div>
