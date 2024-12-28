@@ -39,34 +39,69 @@ I want the response in one single string having the structure
 {{"JD Match":"%","MissingKeywords:[]","Profile Summary":""}}
 """
 
-# Inject custom CSS for background color and image
+# Inject custom CSS for blueish theme and stylish fonts
 st.markdown(
     """
     <style>
+    /* Background styling */
     .stApp {
-        background: linear-gradient(to right, #f4f4f4, #d6e4f0), url("https://www.transparenttextures.com/patterns/diagmonds-light.png");
+        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
         background-size: cover;
         background-attachment: fixed;
+        color: #f0f8ff;
+    }
+
+    /* Title styling */
+    h1 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 3.5em;
+        color: #00aaff;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    /* Subtitle styling */
+    p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.3em;
+        color: #b0c4de;
+        text-align: center;
+        margin-top: -10px;
+        margin-bottom: 30px;
+    }
+
+    /* Customize text inputs */
+    textarea, .stFileUploader {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.1em;
         color: #333333;
     }
-    h1 {
-        font-family: 'Arial', sans-serif;
-        color: #4CAF50;
-        text-align: center;
+
+    /* Button styling */
+    button {
+        background-color: #007acc !important;
+        color: white !important;
+        font-size: 1.2em !important;
+        border-radius: 5px !important;
+        padding: 8px 16px !important;
+        font-family: 'Roboto', sans-serif !important;
     }
-    p {
-        font-family: 'Arial', sans-serif;
-        color: #555555;
-        font-size: 18px;
-        text-align: center;
+
+    /* Subheader styling */
+    .stSubheader {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.4em;
+        color: #f0f8ff;
     }
     </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     """,
     unsafe_allow_html=True,
 )
 
 # Streamlit app content
-st.markdown('<h1>Jobfy</h1>', unsafe_allow_html=True)
+st.markdown('<h1>Jobify</h1>', unsafe_allow_html=True)
 st.markdown('<p>Improve Your Resume ATS</p>', unsafe_allow_html=True)
 
 jd = st.text_area("Paste the Job Description", help="Enter the job description here")
