@@ -3,6 +3,7 @@ import google.generativeai as genai
 import os
 import PyPDF2 as pdf
 from dotenv import load_dotenv
+import json
 
 # Load environment variables
 load_dotenv()
@@ -38,7 +39,7 @@ I want the response in one single string having the structure
 {{"JD Match":"%","MissingKeywords:[]","Profile Summary":""}}
 """
 
-# Inject custom CSS for teal theme with logo and darker fonts
+# Inject custom CSS for teal theme with darker fonts
 st.markdown(
     """
     <style>
@@ -66,14 +67,6 @@ st.markdown(
         color: #002626; /* Dark teal for better readability */
         text-align: center;
         margin-top: -10px;
-        margin-bottom: 30px;
-    }
-
-    /* Logo styling */
-    .logo-container {
-        display: flex;
-        justify-content: center;
-        margin-top: -20px;
         margin-bottom: 30px;
     }
 
@@ -109,17 +102,6 @@ st.markdown(
 
 # Streamlit app content
 st.markdown('<h1>Jobify</h1>', unsafe_allow_html=True)
-
-# Adding the logo from the static folder path
-st.markdown(
-    """
-    <div class="logo-container">
-        <img src="Screenshot 2024-12-28 120040.png" alt="Jobify Logo" width="150">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 st.markdown('<p>Improve Your Resume ATS</p>', unsafe_allow_html=True)
 
 jd = st.text_area("Paste the Job Description", help="Enter the job description here")
