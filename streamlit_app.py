@@ -66,7 +66,7 @@ st.markdown(
 )
 
 # Streamlit app content
-st.markdown('<h1>Jobify</h1>', unsafe_allow_html=True)
+st.markdown('<h1>Jobfy</h1>', unsafe_allow_html=True)
 st.markdown('<p>Improve Your Resume ATS</p>', unsafe_allow_html=True)
 
 jd = st.text_area("Paste the Job Description", help="Enter the job description here")
