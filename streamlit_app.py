@@ -93,6 +93,17 @@ st.markdown(
         font-size: 1.4em;
         color: #003333; /* Darker text for subheaders */
     }
+
+    /* Response box styling */
+    .response-box {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        font-family: 'Roboto', sans-serif;
+        color: #003333;
+    }
     </style>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -112,5 +123,16 @@ submit = st.button("Submit")
 if submit:
     if uploaded_file is not None:
         text = input_pdf_text(uploaded_file)
-        response = get_gemini_response(input_prompt)
-        st.subheader(response)
+        response = get_gemini_response(input_prompt.format(text=text, jd=jd))
+        response_data = json.loads(response)
+
+        st.markdown(
+            f"""
+            <div class="response-box">
+                <h3>JD Match Score: {response_data['JD Match']}</h3>
+                <p><strong>Missing Keywords:</strong> {', '.join(response_data['MissingKeywords'])}</p>
+                <p><strong>Profile Summary:</strong> {response_data['Profile Summary']}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
