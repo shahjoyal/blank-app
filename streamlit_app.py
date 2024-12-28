@@ -39,7 +39,7 @@ I want the response in one single string having the structure
 {{"JD Match":"%","MissingKeywords:[]","Profile Summary":""}}
 """
 
-# Inject custom CSS for teal theme
+# Inject custom CSS for teal theme with darker fonts
 st.markdown(
     """
     <style>
@@ -48,14 +48,14 @@ st.markdown(
         background: linear-gradient(to bottom, #dff7f6, #81d8d0);
         background-size: cover;
         background-attachment: fixed;
-        color: #004d4b;
+        color: #003333; /* Darker text color */
     }
 
     /* Title styling */
     h1 {
         font-family: 'Poppins', sans-serif;
         font-size: 3.5em;
-        color: #008080;
+        color: #002626; /* Dark teal for better contrast */
         text-align: center;
         margin-bottom: 10px;
     }
@@ -64,7 +64,7 @@ st.markdown(
     p {
         font-family: 'Roboto', sans-serif;
         font-size: 1.3em;
-        color: #005f5e;
+        color: #002626; /* Dark teal for better readability */
         text-align: center;
         margin-top: -10px;
         margin-bottom: 30px;
@@ -74,7 +74,7 @@ st.markdown(
     textarea, .stFileUploader {
         font-family: 'Roboto', sans-serif;
         font-size: 1.1em;
-        color: #004d4b;
+        color: #002626; /* Dark teal font for inputs */
     }
 
     /* Button styling */
@@ -91,7 +91,7 @@ st.markdown(
     .stSubheader {
         font-family: 'Poppins', sans-serif;
         font-size: 1.4em;
-        color: #004d4b;
+        color: #003333; /* Darker text for subheaders */
     }
     </style>
 
@@ -101,7 +101,7 @@ st.markdown(
 )
 
 # Streamlit app content
-st.markdown('<h1>Jobfy</h1>', unsafe_allow_html=True)
+st.markdown('<h1>Jobify</h1>', unsafe_allow_html=True)
 st.markdown('<p>Improve Your Resume ATS</p>', unsafe_allow_html=True)
 
 jd = st.text_area("Paste the Job Description", help="Enter the job description here")
