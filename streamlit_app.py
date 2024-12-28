@@ -39,36 +39,35 @@ I want the response in one single string having the structure
 {{"JD Match":"%","MissingKeywords:[]","Profile Summary":""}}
 """
 
-# Streamlit app
+# Inject custom CSS for background color and image
 st.markdown(
     """
     <style>
-    body {
-        background-color: #f4f4f4;
-        color: #333333;
-    }
     .stApp {
-        background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+        background: linear-gradient(to right, #f4f4f4, #d6e4f0), url("https://www.transparenttextures.com/patterns/diagmonds-light.png");
         background-size: cover;
         background-attachment: fixed;
+        color: #333333;
     }
-    .title {
+    h1 {
         font-family: 'Arial', sans-serif;
-        font-size: 32px;
         color: #4CAF50;
+        text-align: center;
     }
-    .text {
+    p {
         font-family: 'Arial', sans-serif;
-        font-size: 18px;
         color: #555555;
+        font-size: 18px;
+        text-align: center;
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-st.markdown('<h1 class="title">Jobify</h1>', unsafe_allow_html=True)
-st.markdown('<p class="text">Improve Your Resume ATS</p>', unsafe_allow_html=True)
+# Streamlit app content
+st.markdown('<h1>Jobify</h1>', unsafe_allow_html=True)
+st.markdown('<p>Improve Your Resume ATS</p>', unsafe_allow_html=True)
 
 jd = st.text_area("Paste the Job Description", help="Enter the job description here")
 uploaded_file = st.file_uploader("Upload Your Resume", type="pdf", help="Please upload a PDF file")
