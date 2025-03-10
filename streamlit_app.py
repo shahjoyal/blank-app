@@ -4,6 +4,7 @@ import os
 import PyPDF2 as pdf
 from dotenv import load_dotenv
 import json
+import re  # Import regex to clean AI output
 
 # Load environment variables
 load_dotenv()
@@ -49,15 +50,13 @@ if uploaded_file and job_description:
     Job Description:
     {job_description}
 
-    Return the response **strictly in JSON format** (DO NOT include any explanations or extra text):
+    Return the response **strictly in JSON format** (DO NOT include explanations, Markdown, or extra text):
 
-    ```json
     {{
       "JD Match": "XX%",
       "MissingKeywords": ["keyword1", "keyword2"],
       "Profile Summary": "Your profile summary goes here."
     }}
-    ```
     """
 
     # Get AI response
@@ -65,7 +64,8 @@ if uploaded_file and job_description:
 
     # Fix: Ensure AI output is valid JSON
     try:
-        response_json = json.loads(response_text.strip("```json").strip("```"))  # Remove markdown formatting if present
+        cleaned_response = re.sub(r"```json|```", "", response_text).strip()  # Remove markdown formatting
+        response_json = json.loads(cleaned_response)  # Convert cleaned string to JSON
         st.json(response_json)  # Display structured JSON output
     except json.JSONDecodeError:
         st.error("AI response is not in valid JSON format. Please try again.")
