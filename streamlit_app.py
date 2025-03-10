@@ -11,33 +11,62 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_gemini_response(input):
     model = genai.GenerativeModel('gemini-1.5-pro-latest')  # Gemini 2 model
-    response = model.generate_content(input)
+    response = model.generate_content(input, stream=False)  # Ensures full response
     return response.text
 
 def input_pdf_text(uploaded_file):
     reader = pdf.PdfReader(uploaded_file)
     text = ""
     for page in range(len(reader.pages)):
-        page = reader.pages[page]
-        text += str(page.extract_text())
-    return text
+        text += reader.pages[page].extract_text() or ""  # Handle NoneType
+    return text.strip()  # Remove unwanted spaces
 
-# Updated Prompt Template to enforce JSON format
-input_prompt = """
-Hey, act like an ATS (Applicant Tracking System) with expertise in software engineering, data science, and big data engineering.
+# Streamlit UI
+st.title("Resume ATS Matcher")
 
-Your task:
-1. Analyze the resume and compare it with the job description.
-2. Assign a **matching percentage** based on JD.
-3. List **missing keywords** required for the role.
-4. Generate a **profile summary**.
+uploaded_file = st.file_uploader("Upload your resume (PDF)", type="pdf")
+job_description = st.text_area("Paste the Job Description")
 
-⚠️ **Return the response strictly in JSON format:**
-```json
-{{
-  "JD Match": "XX%",
-  "MissingKeywords": ["keyword1", "keyword2"],
-  "Profile Summary": "Your profile summary goes here."
-}}
-```
-"""
+if uploaded_file and job_description:
+    st.write("Processing...")
+
+    # Extract text from PDF
+    resume_text = input_pdf_text(uploaded_file)
+
+    # Create the input prompt with explicit JSON enforcement
+    input_prompt = f"""
+    Act as an ATS (Applicant Tracking System) with expertise in software engineering, data science, and big data engineering.
+
+    Your task:
+    1. Analyze the resume and compare it with the job description.
+    2. Assign a **matching percentage** based on JD.
+    3. List **missing keywords** required for the role.
+    4. Generate a **profile summary**.
+
+    Resume:
+    {resume_text}
+
+    Job Description:
+    {job_description}
+
+    Return the response **strictly in JSON format** (DO NOT include any explanations or extra text):
+
+    ```json
+    {{
+      "JD Match": "XX%",
+      "MissingKeywords": ["keyword1", "keyword2"],
+      "Profile Summary": "Your profile summary goes here."
+    }}
+    ```
+    """
+
+    # Get AI response
+    response_text = get_gemini_response(input_prompt)
+
+    # Fix: Ensure AI output is valid JSON
+    try:
+        response_json = json.loads(response_text.strip("```json").strip("```"))  # Remove markdown formatting if present
+        st.json(response_json)  # Display structured JSON output
+    except json.JSONDecodeError:
+        st.error("AI response is not in valid JSON format. Please try again.")
+        st.text_area("Raw AI Response", response_text)  # Show raw output for debugging
