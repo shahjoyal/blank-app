@@ -36,7 +36,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # UI Title
-st.title("Jobify - Resume ATS Matcher")
+st.title("Jobfy - Resume ATS Matcher")
 
 uploaded_file = st.file_uploader("Upload your resume (PDF)", type="pdf")
 job_description = st.text_area("Paste the Job Description")
