@@ -23,7 +23,7 @@ def input_pdf_text(uploaded_file):
     return text.strip()  # Remove unwanted spaces
 
 # Streamlit UI Styling
-st.set_page_config(page_title="Jobify - ATS Matcher", layout="centered")
+st.set_page_config(page_title="Jobfy - ATS Matcher", layout="centered")
 st.markdown("""
     <style>
         body {
