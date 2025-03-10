@@ -10,7 +10,7 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_gemini_response(input):
-    model = genai.GenerativeModel('gemini-1.5-pro')
+    model = genai.GenerativeModel('gemini-1.5-pro-latest')  # Gemini 2 model
     response = model.generate_content(input)
     return response.text
 
@@ -39,3 +39,5 @@ Your task:
   "MissingKeywords": ["keyword1", "keyword2"],
   "Profile Summary": "Your profile summary goes here."
 }}
+```
+"""
